@@ -5,6 +5,7 @@
 [![Documentation (master)](https://img.shields.io/badge/docs-master-59f)](https://bmwill.github.io/diffy/diffy/)
 [![License](https://img.shields.io/badge/license-Apache-green.svg)](LICENSE-APACHE)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE-MIT)
+
 Tools for finding and manipulating differences between files
 
 ## Overview
@@ -35,7 +36,7 @@ which may or may not be utf8 (e.g. [`create_patch_bytes`]).
 
 A [`Patch`] between two texts can be created by doing the following:
 
- ```
+ ```rust
  use diffy::create_patch;
 
  let original = "The Way of Kings\nWords of Radiance\n";
@@ -59,7 +60,7 @@ A [`Patch`] can the be output in the [Unified Format] either by using its
 [`Display`] impl or by using a [`PatchFormatter`] to output the diff with
 color.
 
- ```
+ ```rust
  # use diffy::create_patch;
  #
  # let original = "The Way of Kings\nWords of Radiance\n";
@@ -106,7 +107,7 @@ the correct place to apply each hunk by iterating forward and backward
 from the given position until all context lines from a hunk match the base
 image.
 
- ```
+ ```rust
  use diffy::{apply, Patch};
 
  let s = "\
@@ -169,7 +170,7 @@ If files `A` and `B` modified different regions of the original file `O`
 (or the same region in the same way) then the files can be merged without
 conflict.
 
- ```
+ ```rust
  use diffy::merge;
 
  let original = "the final empire\nThe Well of Ascension\nThe hero of ages\n";
@@ -189,7 +190,7 @@ If both files `A` and `B` modified the same region of the original file
 as it is not clear which modifications should be used in the merged
 result.
 
- ```
+ ```rust
  use diffy::merge;
 
  let original = "The Final Empire\nThe Well of Ascension\nThe hero of ages\n";
