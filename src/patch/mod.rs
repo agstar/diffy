@@ -20,11 +20,7 @@ pub struct Patch<'a, T: ToOwned + ?Sized> {
 }
 
 impl<'a, T: ToOwned + ?Sized> Patch<'a, T> {
-    pub(crate) fn new<O, M>(
-        original: Option<O>,
-        modified: Option<M>,
-        hunks: Vec<Hunk<'a, T>>,
-    ) -> Self
+    pub fn new<O, M>(original: Option<O>, modified: Option<M>, hunks: Vec<Hunk<'a, T>>) -> Self
     where
         O: Into<Cow<'a, T>>,
         M: Into<Cow<'a, T>>,
@@ -34,6 +30,14 @@ impl<'a, T: ToOwned + ?Sized> Patch<'a, T> {
         Self {
             original,
             modified,
+            hunks,
+        }
+    }
+
+    pub fn from_hunk(hunks: Vec<Hunk<'a, T>>) -> Self {
+        Self {
+            original: None,
+            modified: None,
             hunks,
         }
     }
@@ -250,7 +254,7 @@ fn hunk_lines_count<T: ?Sized>(lines: &[Line<'_, T>]) -> (usize, usize) {
 }
 
 impl<'a, T: ?Sized> Hunk<'a, T> {
-    pub(crate) fn new(
+    pub fn new(
         old_range: HunkRange,
         new_range: HunkRange,
         function_context: Option<&'a T>,
@@ -323,7 +327,7 @@ pub struct HunkRange {
 }
 
 impl HunkRange {
-    pub(crate) fn new(start: usize, len: usize) -> Self {
+    pub fn new(start: usize, len: usize) -> Self {
         Self { start, len }
     }
 

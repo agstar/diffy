@@ -14,7 +14,7 @@ mod tests;
 // TODO determine if this should be exposed in the public API
 #[allow(dead_code)]
 #[derive(Debug, PartialEq, Eq)]
-enum Diff<'a, T: ?Sized> {
+pub enum Diff<'a, T: ?Sized> {
     Equal(&'a T),
     Delete(&'a T),
     Insert(&'a T),
@@ -75,7 +75,7 @@ impl DiffOptions {
     /// edit blocks.
     // TODO determine if this should be exposed in the public API
     #[allow(dead_code)]
-    fn set_compact(&mut self, compact: bool) -> &mut Self {
+    pub fn set_compact(&mut self, compact: bool) -> &mut Self {
         self.compact = compact;
         self
     }
@@ -104,7 +104,7 @@ impl DiffOptions {
 
     // TODO determine if this should be exposed in the public API
     #[allow(dead_code)]
-    fn diff<'a>(&self, original: &'a str, modified: &'a str) -> Vec<Diff<'a, str>> {
+    pub fn diff<'a>(&self, original: &'a str, modified: &'a str) -> Vec<Diff<'a, str>> {
         let solution = myers::diff(original.as_bytes(), modified.as_bytes());
 
         let mut solution = solution
@@ -164,7 +164,7 @@ impl DiffOptions {
         )
     }
 
-    pub(crate) fn diff_slice<'a, T: PartialEq>(
+    pub fn diff_slice<'a, T: PartialEq>(
         &self,
         old: &'a [T],
         new: &'a [T],
@@ -185,9 +185,8 @@ impl Default for DiffOptions {
     }
 }
 
-// TODO determine if this should be exposed in the public API
 #[allow(dead_code)]
-fn diff<'a>(original: &'a str, modified: &'a str) -> Vec<Diff<'a, str>> {
+pub fn diff<'a>(original: &'a str, modified: &'a str) -> Vec<Diff<'a, str>> {
     DiffOptions::default().diff(original, modified)
 }
 
